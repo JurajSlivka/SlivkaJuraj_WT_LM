@@ -1,0 +1,341 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--<meta name="google-signin-client_id" content="739447374919-iij0b3qqlnaa4eidj70m2k543n4j3675.apps.googleusercontent.com">-->
+    <meta name="google-signin-client_id" content="738288695695-7ks9brsf61q6n3oqqe9g7nirkn73ign7.apps.googleusercontent.com">
+    <meta name="author" content="Juraj Slivka" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+    <title>Liga Majstrov</title>
+</head>
+
+<body>
+<header>
+    <a href="#welcome" class="active" title="Hlavná stránka">
+        <img id="logo" src="images/logo.png" alt="LOGO">
+    </a>
+    <nav id="menuIts" class="menu mnHide">
+        <ul>
+            <li>
+                <a href="#articles/1/10" title="Články">
+                    Články
+                </a>
+            </li>
+            <li>
+                <a href="#opinions" title="Komentáre">
+                    Komentáre
+                </a>
+            </li>
+            <li>
+                <a href="#addOpinion" title="Pridajte komentár">
+                    Pridajte komentár
+                </a>
+            </li>
+            <li>
+                <a href="#artInsert" id="insert" title="Vložte článok">
+                    Vložte článok
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="invis">
+        <button id="menuTitle" onclick="displayOrHideMenu()">Menu</button>
+    </div>
+
+</header>
+
+<aside id="googleSignIn">
+    <div id="SignInButton"></div>
+    <div id="SignedIn">
+        Signed in as <span id="userName"></span>
+        <button onclick="signOut()">Sign Out</button>
+    </div>
+</aside>
+
+<main id="articles">
+</main>
+
+<main id="footer">
+</main>
+
+
+<script id="template-welcome" type="text/template">
+    <article>
+        <h1>Liga majstrov</h1>
+        <div>
+            Stránka slúži ako projekt na predmet WT v rámci štúdia na TUKE. Stránka sa venuje futbalovej Lige majstrov, zápasom, štatistikám a zaujímavostiam.
+            <br>
+            Auto stránky je študent Informatiky 2. ročníka bakalárskeho štúdia na Fakulte elektrotechniky a informatiky.
+        </div>
+        <img src="images/LM_20.jpg" alt="Champions League" class="img">
+    </article>
+    <article>
+        <h1>Juraj Slivka</h1>
+        <div>
+            Som študent Informatiky na FEI TUKE. Popri škole sa aktívne venujem freeride lyžovaniu, potápaniu a skialpinizmu.
+            Taktiež pracujem v rodinnej firme, ktorá sa špecializuje na potlač textilu a reklamných predmetov na pozícií Research & Development.
+            <br> Telefón: +421 915 558 916
+            <br> Email: <a href="mailto:slivka.juraj@gmail.com?Subject=Liga%20Majstrov" title="Email">slivka.juraj@gmail.com</a>
+        </div>
+        <img src="images/about_me.jpg" alt="Champions League" class="img">
+    </article>
+</script>
+
+<script id="template-articles" type="text/template">
+    {{#.}}
+    <article>
+        <h2><a href="{{detailLink}}">{{title}}</a></h2>
+        {{#imageLink}}
+        <figure>
+            <img src="{{imageLink}}" alt="article figure" class="artimg"/>
+        </figure>
+        {{/imageLink}}
+        <div>
+            {{contentPrev}}
+        </div>
+        <p>
+            by {{author}}
+        </p>
+
+    </article>
+    {{/.}}
+</script>
+
+<script id="template-footer-preklik" type="text/template">
+    <footer>
+        <p>
+            Displaying articles {{range}}-{{currPage}} of {{totalCount}} articles.
+            <nav>
+                {{#prevPage}}
+                <a href="#articles/{{prevPage}}/{{totalCount}}"><< Previous page</a>
+                {{/prevPage}}
+                {{#nextPage}}
+                <a href="#articles/{{nextPage}}/{{totalCount}}">Next page >></a>
+                {{/nextPage}}
+            </nav>
+        </p>
+            <p>Website by Juraj Slivka
+                <br>
+                Email: <a href="mailto:slivka.juraj@gmail.com?Subject=Liga%20Majstrov" title="Email">slivka.juraj@gmail.com</a>
+            </p>
+    </footer>
+</script>
+
+<script id="template-footer" type="text/template">
+    <footer>
+        <div>
+            <p>Website by Juraj Slivka
+                <br>
+                Email: <a href="mailto:slivka.juraj@gmail.com?Subject=Liga%20Majstrov" title="Email">slivka.juraj@gmail.com</a>
+            </p>
+        </div>
+    </footer>
+</script>
+
+<script id="template-articles-error" type="text/template">
+
+    <article>
+        <h2>Articles acquisition failed</h2>
+        <p>
+            {{errMessage}}
+        </p>
+    </article>
+    <footer  class="menuLink"><a href="#menuTitle">Back to the menu</a></footer>
+
+</script>
+
+<script id="template-opinions" type="text/template">
+    <article  id="artOpinions">
+        <h2>Visitor Opinions</h2>
+        {{#.}}
+        <section>
+            <h3>{{name}}    {{created}}<i><br>{{email}}<br>{{team}}</i></h3>
+            <p>{{comment}}</p>
+        </section>
+        {{/.}}
+        {{^.}}
+        <section>
+            Sorry, no opinions found.
+        </section>
+        {{/.}}
+    </article>
+</script>
+
+<script id="template-addOpinion" type="text/template">
+    <article  id="artOpnFrm">
+        <div class="form">
+        <h1>Vaš komentár</h1>
+            <form id="opnFrm" onsubmit="return processOpnFrmData(event)">
+                <label for="name">Meno:</label><br>
+                <input type="text" id="name" name="name" required><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br>
+                <br>
+                <h2>Obľúbený tím:</h2>
+                <input type="radio" id="fcb" name="team" value="FC Barcelona" checked>
+                <label for="fcb">FC Barcelona</label><br>
+                <input type="radio" id="real" name="team" value="Real Madrid">
+                <label for="real">Real Madrid</label><br>
+                <input type="radio" id="juv" name="team" value="FC Juventus">
+                <label for="real">FC Juventus</label><br>
+                <br>
+                <label for="textarea">Váš názor:</label><br>
+                <textarea id="textarea" name="textarea" placeholder="Tu napíšte Váš komentár....." required></textarea><br>
+                <input type="checkbox" id="verification" required>
+                <label for="verification">Súhlasím so spracovaním údajov</label><br>
+                <input type="submit" value="Odoslať!">
+                <br><br>
+            </form>
+        </div>
+    </article>
+</script>
+
+<script id="template-article" type="text/template">
+    <article>
+        <h2>{{title}}</h2>
+        <p>
+            by {{author}}
+        </p>
+        {{#imageLink}}
+        <figure><img src="{{imageLink}}" alt="article figure" class="img2"/>
+        </figure>
+        {{/imageLink}}
+        <div>{{{content}}}</div>
+        <h2>Comments</h2>
+            {{#comments}}
+        <section>
+            <p>
+                {{text}}
+                <br>
+                by {{author}}
+            </p>
+        </section>
+        {{/comments}}
+        {{^comments}}
+        Žiadne komentáre.
+        {{/comments}}
+        <br>
+            <form id="addCommentForm">
+                    <label for="author">Author:</label>
+                    <input type="text" name="author" id="commentAuthor" size="50" required="" title="Autor komentára" maxlength="100" placeholder="napr. Ján Trieska">
+                <div class="artTextArea">
+                    <label for="content">Article content:</label>
+                    <textarea name="content" id="commentAdd" spellcheck="true" lang="sk" cols="50" rows="5" required="" title="Obsah komentára"></textarea>
+                </div>
+                <div class="buttons">
+                    <button type="reset" id="cancelComment" class="artReset" onclick="hideCommentForm()">Cancel</button>
+                    <button type="submit" id="sendComment" class="artSubmit"><a href="{{addCommLink}}">Submit</a></button>
+                </div>
+            </form>
+        <p>
+            Keywords:
+            {{tags}}
+        </p>
+        <div class="buttons">
+            <button><a href="{{backLink}}" class="linkAsButton"><< Back</a></button>
+            <button><a href="{{editLink}}" class="linkAsButton">Edit</a></button>
+            <button><a href="{{deleteLink}}" class="linkAsButton">Delete</a></button>
+            <button><a href="#welcome" class="linkAsButton">Up to the menu</a></button>
+        </div>
+    </article>
+
+</script>
+
+<script id="template-addArticle" type="text/template">
+    <article class="addArtDiv">
+        <form id="addArticleForm">
+                <label for="author">Autor:</label><br>
+                <input type="text" name="author" id="authorAdd" size="50" title="Autor článku" maxlength="100">
+                <br>
+                <label for="title">Názov:</label>
+                <br>
+                <input type="text" name="title" id="titleAdd" size="50" maxlength="100" pattern="\S[\S\s]*" required="" title="Názov článku">
+                <br>
+                <label for="imageLink">Obrázok (url):</label>
+                <br>
+                <input type="url" name="imageLink" id="imageLinkAdd" size="50" title="URL obrázka" maxlength="100">
+                <br>
+                <input type="file" id="flElmAdd" name="file" accept="image/jpeg, image/png">
+                <br>
+                <button type="button" id="btFileUploadAdd">Odošli obrázok na server</button>
+                <button type="button" id="btCancelFileUploadAdd" onclick="cancelFileUpload(2)">Zruš nahrávanie</button>
+            <div class="artTextArea">
+                <br>
+                <label for="content">Text článku / Article content:</label><br>
+                <textarea name="content" id="contentAdd" spellcheck="true" lang="sk" cols="50" rows="5" required="" title="Obsah článku"></textarea>
+            </div>
+            <div class="artKeywords">
+                <br>
+                <label for="tags">Kľúčové slová / Keywords:</label>
+                <br>
+                <input type="text" name="tags" id="tagsAdd" size="50" title="Zoznam kľúčových slov oddelených čiarkou" placeholder="napr. dedina, dráma / e.g. village, drama">
+            </div>
+            <br>
+            <div class="buttons">
+                <button type="reset" class="artReset">Reset</button>
+                <button type="submit" class="artSubmit">Pridaj článok </button>
+            </div>
+        </form>
+    </article>
+</script>
+
+<script id="template-article-form" type="text/template">
+    <article>
+        <form id="articleForm" onsubmit="return {{formSubmitCall}}">
+            <br>
+                <label for="author">Author:</label>
+                <input type="text" name="author" id="author" value="{{author}}" size="50" title="Article author, max. length 100 characters." maxlength="100" placeholder="e.g. Ján Trieska" />
+            <br>
+                <label for="title">Title:</label>
+                <input type="text" name="title" id="title" value="{{title}}" size="50"  maxlength="100" pattern="\S[\S\s]*" required title="Article title, mandatory item, max. length: 100 characters, the first character must not be a space." placeholder="e.g. My story." />
+            <br>
+                <label for="imageLink">Image (url):</label>
+                <input type="url" name="imageLink" id="imageLink" value="{{imageLink}}" size="50" title="Image URL, max. length 100 characters." maxlength="100"/>
+            <br>
+            <button type="button" id="btShowFileUpload" onclick="showFileUpload(1)">Upload image</button>
+            <br>
+            <fieldset class="hiddenElm" id="fsetFileUpload">
+                <legend>Image Upload</legend>
+                <input type="file" id="flElm" name="file" accept="image/jpeg, image/png"/>
+                <br />
+                <button type="button" id="btFileUpload" onclick="uploadImg('{{urlBase}}')">Send image to server</button>
+                <button type="button" id="btCancelFileUpload" onclick="cancelFileUpload(1)">Cancel uploading</button>
+            </fieldset>
+            <div class="artTextArea">
+                <label for="content">Article content:</label>
+                <textarea
+                        name="content" id="content" spellcheck="true" lang="sk"
+                        cols="50" rows="5" required
+                        title="Article content, mandatory item, can be plain text or in HTML.">{{content}}</textarea>
+            </div>
+            <div class="artKeywords">
+                <label for="tags">Keywords:</label>
+                <input  type="text" name="tags" id="tags" value="{{tags}}" size="50"
+                        title="Keyword list, comma separated." placeholder="e.g. village, drama" />
+            </div>
+            <br>
+            <div class="buttons">
+                <button type="reset" class="artReset">Reset Form</button>
+                <button type="submit" class="artSubmit">{{submitBtTitle}}</button>
+                <button><a href="{{backLink}}" class="linkAsButton">Back</a></button>
+                <button><a href="#menu" class="linkAsButton">Up to the menu</a></button>
+            </div>
+        </form>
+    </article>
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js" integrity="sha256-srhz/t0GOrmVGZryG24MVDyFDYZpvUH2+dnJ8FbpGi0=" crossorigin="anonymous"></script>
+<script>window.Mustache || document.write('<script src="js/mustache.min.js"><\/script>')</script>
+<script src="js/82GoogleAccessBetter.js"></script>
+<script src="https://apis.google.com/js/platform.js?onload=startGSingIn" async defer></script>
+<script src="js/mustache.min.js"></script>
+<script src="js/mainMenu.js"></script>
+<script src="js/addOpinion.js"></script>
+<script src="js/handleArticleForms.js"></script>
+<script type="module" src="js/handleAddArticle.js"></script>
+<script type="module" src="js/routerInit.js"></script>
+
+</body>
+</html>
+

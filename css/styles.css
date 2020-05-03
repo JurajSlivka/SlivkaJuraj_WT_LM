@@ -1,0 +1,386 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color:  #184481;
+    animation-name: colorFlip;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+    font-family: "Abhaya Libre", serif;
+    color: white;
+}
+
+@keyframes colorFlip {
+    0%   {background-color: #184481;}
+    50%  {background-color: #0e2050;}
+    100% {background-color: #184481;}
+}
+
+@media only screen and (max-width: 700px) {
+    header {
+        display: none;
+    }
+    body {
+        background-color: lightblue;
+    }
+}
+
+header {
+    max-height: 5em;
+    background-color: #0e2050;
+    padding: 0.5em 3em;
+    color: white;
+}
+
+header #logo {
+    margin: 0em 1em;
+    height: 4em;
+    display: inline-block;
+}
+header ul {
+    position: absolute;
+    right: 1em;
+    top: 0em;
+    list-style: none;
+}
+header ul li {
+    text-align: center;
+    display: inline-block;
+    min-width: 15vw;
+}
+header ul li a {
+    padding: 1em 0.5em;
+    font-size: 2em;
+    font-family: "Abhaya Libre", serif;
+    color: white;
+    text-decoration: none;
+
+}
+header ul li a:hover {
+    color: #0e2050;
+    background-color: white;
+    transition-duration: 2s;
+}
+
+.invis {
+    display: none;
+}
+
+article {
+    background-color: #0e2050;
+    width: 70vw;
+    margin: 20px auto;
+    min-height: 10vw;
+    padding: 1em 3em;
+    text-align: justify;
+
+}
+article h1 {
+    text-align: left;
+}
+article img {
+    width: 70vw;
+    margin: 20px 0;
+}
+
+article img:hover{
+    transform: scale(1.2,1.2);
+}
+
+article .img {
+    max-height: 40vw;
+    object-fit: cover;
+    object-position: center;
+}
+
+figure .artimg {
+    width: 65vw;
+    max-block-size: 20vw;
+    object-position: center;
+    object-fit: cover;
+}
+
+figure .img2 {
+    width: 40em;
+}
+
+article a {
+    color: white;
+}
+article .author {
+    text-align: right;
+    color: #184481;
+    text-decoration: none;
+}
+
+article button {
+    border-radius: 5px;
+    display: unset;
+    background-color: lightblue;
+    color: white;
+    height: 20%;
+    padding: 0.5em;
+    margin: 0.2em;
+    font-size: 1em;
+}
+
+section {
+    background-color: #184481;
+}
+
+section h3{
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+}
+
+section p{
+    padding-left: 0.5em;
+    padding-bottom: 0.3em;
+}
+
+footer {
+    max-height: 10em;
+    min-height: 5em;
+    width: 100vw;
+    background-color: #0e2050;
+    padding: 0.5em 3em;
+    color: white;
+    position: relative;
+    text-align: center;
+    left: 0;
+    bottom: 0;
+}
+
+.form {
+    margin: 0 auto;
+    max-width: 80%;
+    color: white;
+}
+
+.form h1 {
+    color: white;
+    font-size: 2em;
+}
+
+.form h2 {
+    color: white;
+    font-size: 1.5em;
+}
+
+#opnFrm input {
+    background-color: white;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    font-size: 1em;
+}
+#opnFrm input[type=text],input[type=email] {
+    width: calc(80% - 0.55em);
+}
+
+textarea {
+    width: 80%;
+    min-height: 6em;
+    background-color: white;
+    border-radius: 5px;
+    resize: vertical;
+    margin: 0.5em 0;
+}
+#opnFrm input[type=submit] {
+    display: block;
+    background-color: lightblue;
+    color: white;
+    width: 20%;
+}
+#opnFrm label {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0.5em 0;
+}
+
+#addArticleForm {
+    max-width: 80%;
+    margin-left:10%;
+    text-align: left;
+}
+
+#addArticleForm input {
+    background-color: white;
+    max-width: 100%;
+    border-radius: 5px;
+    padding: 0.5em;
+
+    font-size: 1em;
+}
+
+#addArticleForm input[type=text]{
+    background-color: white;
+    max-width: 100%;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    font-size: 1em;
+}
+
+
+#addArticleForm textarea {
+    background-color: white;
+    max-width: 100%;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    font-size: 1em;
+}
+
+
+#addArticleForm button {
+    border-radius: 5px;
+    display: unset;
+    background-color: lightblue;
+    color: white;
+    height: 20%;
+    padding: 0.5em;
+    margin: 0.2em;
+    font-size: 1em;
+}
+
+#addArticleForm label {
+    color: white;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0.5em 0;
+}
+
+#articleForm {
+    max-width: 80%;
+    margin-left:10%;
+    text-align: left;
+}
+
+#articleForm input {
+    background-color: white;
+    max-width: 100%;
+    border-radius: 5px;
+    padding: 0.5em;
+
+    font-size: 1em;
+}
+
+#articleForm input[type=text]{
+    background-color: white;
+    max-width: 100%;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    font-size: 1em;
+}
+
+
+#articleForm textarea {
+    background-color: white;
+    max-width: 100%;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    font-size: 1em;
+}
+
+
+#articleForm button {
+    border-radius: 5px;
+    display: unset;
+    background-color: lightblue;
+    color: white;
+    height: 20%;
+    padding: 0.5em;
+    margin: 0.2em;
+    font-size: 1em;
+}
+
+#articleForm label {
+    color: white;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0.5em 0;
+}
+
+#addCommentForm {
+    max-width: 50%;
+    text-align: left;
+}
+
+#addCommentForm input {
+    background-color: white;
+    max-width: 100%;
+    border-radius: 5px;
+    padding: 0.5em;
+    font-size: 1em;
+}
+
+#addCommentForm input[type=text]{
+    background-color: white;
+    max-width: 100%;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    font-size: 1em;
+}
+
+
+#addCommentForm textarea {
+    background-color: white;
+    max-width: 100%;
+    height: 50%;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    font-size: 1em;
+}
+
+
+#addCommentForm button {
+    border-radius: 5px;
+    display: unset;
+    background-color: lightblue;
+    color: white;
+    height: 20%;
+    padding: 0.5em;
+    margin: 0.2em;
+    font-size: 1em;
+}
+
+#addCommentForm label {
+    color: white;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0.5em 0;
+}
+
+
+label{
+    vertical-align: top;
+    display: inline-block; /*instead of inline (default)*/
+    min-width: 6em;
+}
+
+label.long{
+    min-width: 8em;
+}
+
+input, textarea{
+    margin-bottom: 0.5em;
+}
+
+#googleSignIn{
+    float: right;
+}
+
+
+.hiddenElm {display:none;}
+
+
+.showElm {display:block;}

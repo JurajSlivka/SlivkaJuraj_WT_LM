@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color:  white;
+    font-family: "Abhaya Libre", serif;
+    color: black;
+}
+
+header {
+    display: none;
+}
+
+aside {
+    display: none;
+}
+
+article {
+    background-color: white;
+    width: 70vw;
+    margin: 20px auto;
+    min-height: 20vw;
+    padding: 1em 3em;
+    text-align: justify;
+
+}
+article h1 {
+    text-align: left;
+}
+article img {
+    width: 70vw;
+    margin: 20px 0;
+}
+article .img {
+    max-height: 40vw;
+    object-fit: cover;
+}
+
+article a {
+    color: black;
+}
+article .author {
+    text-align: right;
+    color: black;
+    text-decoration: none;
+}
+
+footer {
+    display: none;
+}
